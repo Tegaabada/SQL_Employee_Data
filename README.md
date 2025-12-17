@@ -242,5 +242,5 @@ Overall, the exercise highlights how SQL queries can uncover meaningful workforc
 
 
 
-## Author - Tega Abada
+#### Author - Tega Abada
 
