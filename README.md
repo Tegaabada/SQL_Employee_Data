@@ -187,17 +187,18 @@ SELECT * FROM [dbo].[Employee Info]
 WHERE [Gender] = 'M' AND [Department] = 'HR';
 ```
 -- Q19: Write a SQL query to retrieve employee details from EmployeeInfo table who have a date of joining in the EmployeePosition table
--- Option 1
 ```sql
+-- Option 1
+
 SELECT * FROM [dbo].[Employee Info] EI
 WHERE EXISTS (
     SELECT 1
     FROM [dbo].[Employee position2] EP
     WHERE EP.EmpID = EI.EmpID
       AND EP.DateOfJoining IS NOT NULL)
-```
+
 -- Option 2:
-```sql
+
 SELECT EI.*
 FROM [dbo].[Employee Info] EI
 LEFT JOIN [dbo].[Employee position2] EP ON EI.EmpID = EP.EmpID
