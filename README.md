@@ -6,7 +6,7 @@
 **Database**:`SQL DB`
 **Tech Used**: `SQL Server` `ETL Pipeline`
 
-This project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze employee data. The project involves setting up a employee database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries.
+This project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze employee data. The project involves setting up employee tables on an SQL database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries.
 
 ## Objectives
 
