@@ -25,7 +25,7 @@ alter column DOB DATE;
 SELECT UPPER(EmpFname) AS [EmpName]
 FROM [Employee Info];
 
--- Q2: Write a query to fetch the number of employees working in the department ëHRí.
+-- Q2: Write a query to fetch the number of employees working in the department ‚ÄòHR‚Äô.
 
 
 SELECT COUNT (*) AS [Employee Count]
@@ -38,7 +38,7 @@ WHERE [Department] = 'HR';
 
 SELECT cast( GETDATE() AS date) AS [Current Date];
 
--- Q4: Write a query to retrieve the first four characters of† EmpLname from the EmployeeInfo table.
+-- Q4: Write a query to retrieve the first four characters of¬† EmpLname from the EmployeeInfo table.
 
 SELECT LEFT (EmpLname, 4) AS FirstFourChars
 FROM [Employee Info];
@@ -63,12 +63,6 @@ INTO [New Emplyee Table]
 FROM [Employee Info] ei
 JOIN [dbo].[Employee position2] ep ON ei.[EmpID] = ep.[EmpID];
 
---Query below is to select and then Drop the table
-SELECT *
-FROM [New Emplyee Table];
-
-DROP table [New Emplyee Table]
-
 -- Q7: Write q query to find all the employees whose salary is between 50000 to 100000.
 
 SELECT EP.[EmpID],
@@ -77,9 +71,7 @@ FROM [dbo].[Employee position2] EP
 JOIN [dbo].[Employee Info] EI ON EP.[EmpID] = EI.[EmpID]
 WHERE EP.[Salary] BETWEEN 50000 AND 100000;
 
-
-
--- Q8: Write a query to find the names of employees that begin with ëSí
+-- Q8: Write a query to find the names of employees that begin with ‚ÄòS‚Äô
 
 SELECT [EmpFname]
 FROM [dbo].[Employee Info]
@@ -95,7 +87,7 @@ ORDER BY [Salary] DESC;
 SELECT TOP 10 PERCENT *
 FROM [dbo].[Employee position2]
 ORDER BY [Salary] DESC;
--- Q10: Write a query to retrieve the EmpFname and EmpLname in a single column as ìFullNameî. The first name and the last name must be separated with space.
+-- Q10: Write a query to retrieve the EmpFname and EmpLname in a single column as ‚ÄúFullName‚Äù. The first name and the last name must be separated with space.
 
 SELECT [EmpFname] + ' ' + [EmpLname] AS FULLNAME
 FROM [dbo].[Employee Info];
@@ -112,14 +104,14 @@ SELECT *
 FROM [dbo].[Employee Info]
 ORDER BY [EmpLname];
 
--- Q13: Write a query to fetch details of employees whose EmpLname ends with an alphabet ëAí and contains five alphabets.
+-- Q13: Write a query to fetch details of employees whose EmpLname ends with an alphabet ‚ÄòA‚Äô and contains five alphabets.
 
 SELECT *
 FROM [dbo].[Employee Info]
 WHERE [EmpLname] LIKE '%A'
 AND LEN([EmpLname])= 5;
 
--- Q14: Write a query to fetch details of all employees excluding the employees with first names, ìSanjayî and ìSoniaî from the EmployeeInfo table.
+-- Q14: Write a query to fetch details of all employees excluding the employees with first names, ‚ÄúSanjay‚Äù and ‚ÄúSonia‚Äù from the EmployeeInfo table.
 
 SELECT * FROM [dbo].[Employee Info]
 WHERE [EmpFname] NOT IN ('Sanjay', 'Sonia')
@@ -128,7 +120,7 @@ WHERE [EmpFname] NOT IN ('Sanjay', 'Sonia')
 SELECT * FROM [dbo].[Employee Info]
 WHERE [EmpFname] != 'Sanjay' AND [EmpFname] != 'Sonia'
 
--- Q15: Write a query to fetch details of employees with the address as ìDELHI(DEL)î
+-- Q15: Write a query to fetch details of employees with the address as ‚ÄúDELHI(DEL)‚Äù
 
 SELECT * FROM [dbo].[Employee Info]
 WHERE [Address] = 'DELHI(DEL)';
@@ -147,7 +139,7 @@ FROM [dbo].[Employee position2] ep
 JOIN [dbo].[Employee Info] EI ON EP.[EmpID] = EI.[EmpID]
 WHERE [EmpPosition] = 'Manager';
 
--- Q17: Write a query to fetch the department-wise count of employees sorted by departmentís count in ascending order
+-- Q17: Write a query to fetch the department-wise count of employees sorted by department‚Äôs count in ascending order
 
 SELECT [Department],COUNT([EmpID]) AS EmployeeCount
 from [dbo].[Employee Info]
@@ -193,4 +185,5 @@ FROM (SELECT TOP 2 Salary
     ORDER BY Salary DESC) AS MaxSalaries;
 
 -- End of Queries
+
 
