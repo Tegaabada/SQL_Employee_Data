@@ -13,7 +13,7 @@ This project is designed to demonstrate SQL skills and techniques typically used
 1. **Set up a database**: Populate a database with the provided employee data data.
 2. **Data Cleaning**: Identify and remove any records with missing or null values.
 3. **Exploratory Data Analysis (EDA)**: Perform basic exploratory data analysis to understand the dataset.
-4. **Business Analysis**: Use SQL to answer specific business questions and derive insights from the sales data.
+4. **Business Analysis**: Use SQL to answer specific business questions and derive insights from the dataset.
 
 ## Project Structure
 
