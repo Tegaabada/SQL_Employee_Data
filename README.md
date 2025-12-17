@@ -19,7 +19,8 @@ This project is designed to demonstrate SQL skills and techniques typically used
 
 ### 1. Database Setup
 
-- **Database Set up**: The project starts by setting up on an existing database created with this code ```sql CREATE DATABASE [SQL_DB]; ```.
+- **Database Set up**: The project starts by setting up on an existing database created with this code
+  ``` CREATE DATABASE [SQL_DB]; ```
 - **Table Creation**: The tables were imported via ETL pipeline.
 
 
