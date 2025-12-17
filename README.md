@@ -1,4 +1,4 @@
-# Employee Data SQL Project
+# HR Reporting SQL Project
 
 ## Project Overview
 
@@ -21,171 +21,224 @@ This project is designed to demonstrate SQL skills and techniques typically used
 
 - **Database Set up**: The project starts by setting up on an existing database created with this code
   ``` CREATE DATABASE [SQL_DB]; ```
-- **Table Creation**: The tables were imported via ETL pipeline.
+- **Table Creation**: The tables, ```[Employee Info]``` and ```[Employee position2]``` were imported via ETL pipeline.
 
 
-### 2. Data Exploration & Cleaning
+### 2. Data Cleaning
 
-- **Record Count**: Determine the total number of records in the dataset.
-- **Customer Count**: Find out how many unique customers are in the dataset.
-- **Category Count**: Identify all unique product categories in the dataset.
-- **Null Value Check**: Check for any null values in the dataset and delete records with missing data.
+- **Null Value Check**: View tables and check for any null values in the dataset and delete records with missing data.
+- **Datatype Check**: View tables and check datatype and alter columns with wrong datatypes.
 
 ```sql
-SELECT COUNT(*) FROM retail_sales;
-SELECT COUNT(DISTINCT customer_id) FROM retail_sales;
-SELECT DISTINCT category FROM retail_sales;
+USE [SQL DB]
+GO
 
-SELECT * FROM retail_sales
-WHERE 
-    sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR 
-    gender IS NULL OR age IS NULL OR category IS NULL OR 
-    quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL;
+SELECT [EmpID]
+      ,[EmpFname]
+      ,[EmpLname]
+      ,[Department]
+      ,[Project]
+      ,[Address]
+      ,[DOB]
+      ,[Gender]
+  FROM [dbo].['Employee Info$']
 
-DELETE FROM retail_sales
-WHERE 
-    sale_date IS NULL OR sale_time IS NULL OR customer_id IS NULL OR 
-    gender IS NULL OR age IS NULL OR category IS NULL OR 
-    quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL;
+GO
+
+
+DELETE FROM [dbo].['Employee Info$']
+WHERE GENDER IS NULL;
+
+ALTER TABLE [dbo].['Employee Info$']
+alter column DOB DATE;
 ```
 
-### 3. Data Analysis & Findings
+### 3. Exploratory Data Analysis & Findings
 
 The following SQL queries were developed to answer specific business questions:
 
-1. **Write a SQL query to retrieve all columns for sales made on '2022-11-05**:
+-- Q1: Write a query to fetch the EmpFname from the EmployeeInfo table in the upper case and use the ALIAS name as EmpName.
+```sql
+SELECT UPPER(EmpFname) AS [EmpName]
+FROM [Employee Info];
+```
+-- Q2: Write a query to fetch the number of employees working in the department ‘HR’.
+```sql
+SELECT COUNT (*) AS [Employee Count]
+from [dbo].[Employee Info]
+WHERE [Department] = 'HR';
+```
+-- Q3: Write a query to get the current date.
+```sql
+SELECT cast( GETDATE() AS date) AS [Current Date];
+```
+-- Q4: Write a query to retrieve the first four characters of  EmpLname from the EmployeeInfo table.
+```sql
+SELECT LEFT (EmpLname, 4) AS FirstFourChars
+FROM [Employee Info];
+```
+-- Q5: Write a query to fetch only the place name(string before brackets) from the Address column of EmployeeInfo table.
+```sql
+SELECT  LEFT(Address, CHARINDEX('(', Address) -1) AS [Place Name]
+FROM [Employee Info];
+```
+-- Q6: Write a query to create a new table that consists of data and structure copied from the other table.
 ```sql
 SELECT *
-FROM retail_sales
-WHERE sale_date = '2022-11-05';
+INTO [Newtable]
+from [dbo].[Employee Info];
 ```
-
-2. **Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022**:
+-- This created a new table joining both tables into it using join via emplyee ID
 ```sql
+SELECT ei.[EmpID], EI.[EmpFname],EI.[EmpLname],EI.[Department],
+EI.[Project],EI.[DOB],
+EP.[EmpPosition],EP.[DateOfJoining],EP.[Salary]
+INTO [New Emplyee Table]
+FROM [Employee Info] ei
+JOIN [dbo].[Employee position2] ep ON ei.[EmpID] = ep.[EmpID];
+```
+-- Q7: Write q query to find all the employees whose salary is between 50000 to 100000.
+```sql
+SELECT EP.[EmpID],
+EI.[EmpFname] + ' ' + EI.[EmpLname] AS FULLNAME
+FROM [dbo].[Employee position2] EP
+JOIN [dbo].[Employee Info] EI ON EP.[EmpID] = EI.[EmpID]
+WHERE EP.[Salary] BETWEEN 50000 AND 100000;
+```
+-- Q8: Write a query to find the names of employees that begin with ‘S’
+```sql
+SELECT [EmpFname]
+FROM [dbo].[Employee Info]
+WHERE [EmpFname] LIKE 'S%';
+```
+-- Q9: Write a query to fetch top N records.
+```sql
+-- TOP 5
+SELECT TOP (5) *
+FROM [dbo].[Employee position2]
+ORDER BY [Salary] DESC;
+
+--TOP 10
+SELECT TOP 10 PERCENT *
+FROM [dbo].[Employee position2]
+ORDER BY [Salary] DESC;
+```
+-- Q10: Write a query to retrieve the EmpFname and EmpLname in a single column as “FullName”. The first name and the last name must be separated with space.
+```sql
+SELECT [EmpFname] + ' ' + [EmpLname] AS FULLNAME
+FROM [dbo].[Employee Info];
+```
+-- Q11: Write a query find number of employees whose DOB is between 02/05/1970 to 31/12/1995 and are grouped according to gender
+```sql
+SELECT COUNT ([EmpID])
+FROM [dbo].[Employee Info]
+WHERE [DOB] BETWEEN '1970/05/02' AND '1995/12/31';
+```
+-- Q12: Write a query to fetch all the records from the EmployeeInfo table ordered by EmpLname in descending order and Department in the ascending order.
+```sql
+SELECT *
+FROM [dbo].[Employee Info]
+ORDER BY [EmpLname];
+```
+-- Q13: Write a query to fetch details of employees whose EmpLname ends with an alphabet ‘A’ and contains five alphabets.
+```sql
+SELECT *
+FROM [dbo].[Employee Info]
+WHERE [EmpLname] LIKE '%A'
+AND LEN([EmpLname])= 5;
+```
+-- Q14: Write a query to fetch details of all employees excluding the employees with first names, “Sanjay” and “Sonia” from the EmployeeInfo table.
+```sql
+SELECT * FROM [dbo].[Employee Info]
+WHERE [EmpFname] NOT IN ('Sanjay', 'Sonia')
+
+
+SELECT * FROM [dbo].[Employee Info]
+WHERE [EmpFname] != 'Sanjay' AND [EmpFname] != 'Sonia'
+```
+-- Q15: Write a query to fetch details of employees with the address as “DELHI(DEL)”
+```sql
+SELECT * FROM [dbo].[Employee Info]
+WHERE [Address] = 'DELHI(DEL)';
+```
+-- Q16: Write a query to fetch all employees who also hold the managerial position.
+```sql
+SELECT * FROM [dbo].[Employee position2]
+WHERE [EmpPosition] = 'Manager';
+
+--This query used the Join function
+
 SELECT 
-  *
-FROM retail_sales
-WHERE 
-    category = 'Clothing'
-    AND 
-    TO_CHAR(sale_date, 'YYYY-MM') = '2022-11'
-    AND
-    quantity >= 4
+ei.[EmpFname] + ' ' + ei.[EmpLname] AS FULLNAME, ep.*
+FROM [dbo].[Employee position2] ep
+JOIN [dbo].[Employee Info] EI ON EP.[EmpID] = EI.[EmpID]
+WHERE [EmpPosition] = 'Manager';
+```
+-- Q17: Write a query to fetch the department-wise count of employees sorted by department’s count in ascending order
+```sql
+SELECT [Department],COUNT([EmpID]) AS EmployeeCount
+from [dbo].[Employee Info]
+GROUP BY Department
+ORDER BY EmployeeCount ASC;
+```
+-- Q18: Write a query to fecth Male employees in HR department
+```sql
+SELECT * FROM [dbo].[Employee Info]
+WHERE [Gender] = 'M' AND [Department] = 'HR';
+```
+-- Q19: Write a SQL query to retrieve employee details from EmployeeInfo table who have a date of joining in the EmployeePosition table
+-- Option 1
+```sql
+SELECT * FROM [dbo].[Employee Info] EI
+WHERE EXISTS (
+    SELECT 1
+    FROM [dbo].[Employee position2] EP
+    WHERE EP.EmpID = EI.EmpID
+      AND EP.DateOfJoining IS NOT NULL)
+```
+-- Option 2:
+```sql
+SELECT EI.*
+FROM [dbo].[Employee Info] EI
+LEFT JOIN [dbo].[Employee position2] EP ON EI.EmpID = EP.EmpID
+WHERE EP.DateOfJoining IS NOT NULL;
 ```
 
-3. **Write a SQL query to calculate the total sales (total_sale) for each category.**:
+-- Q20: Write a query to retrieve two minimum and maximum salaries from the EmployeePosition table
 ```sql
-SELECT 
-    category,
-    SUM(total_sale) as net_sale,
-    COUNT(*) as total_orders
-FROM retail_sales
-GROUP BY 1
-```
+SELECT Salary
+FROM (SELECT TOP 2 Salary
+    FROM [dbo].[Employee position2]
+    ORDER BY Salary ASC) AS MinSalaries
 
-4. **Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.**:
-```sql
-SELECT
-    ROUND(AVG(age), 2) as avg_age
-FROM retail_sales
-WHERE category = 'Beauty'
-```
+UNION
 
-5. **Write a SQL query to find all transactions where the total_sale is greater than 1000.**:
-```sql
-SELECT * FROM retail_sales
-WHERE total_sale > 1000
-```
-
-6. **Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.**:
-```sql
-SELECT 
-    category,
-    gender,
-    COUNT(*) as total_trans
-FROM retail_sales
-GROUP 
-    BY 
-    category,
-    gender
-ORDER BY 1
-```
-
-7. **Write a SQL query to calculate the average sale for each month. Find out best selling month in each year**:
-```sql
-SELECT 
-       year,
-       month,
-    avg_sale
-FROM 
-(    
-SELECT 
-    EXTRACT(YEAR FROM sale_date) as year,
-    EXTRACT(MONTH FROM sale_date) as month,
-    AVG(total_sale) as avg_sale,
-    RANK() OVER(PARTITION BY EXTRACT(YEAR FROM sale_date) ORDER BY AVG(total_sale) DESC) as rank
-FROM retail_sales
-GROUP BY 1, 2
-) as t1
-WHERE rank = 1
-```
-
-8. **Write a SQL query to find the top 5 customers based on the highest total sales **:
-```sql
-SELECT 
-    customer_id,
-    SUM(total_sale) as total_sales
-FROM retail_sales
-GROUP BY 1
-ORDER BY 2 DESC
-LIMIT 5
-```
-
-9. **Write a SQL query to find the number of unique customers who purchased items from each category.**:
-```sql
-SELECT 
-    category,    
-    COUNT(DISTINCT customer_id) as cnt_unique_cs
-FROM retail_sales
-GROUP BY category
-```
-
-10. **Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)**:
-```sql
-WITH hourly_sale
-AS
-(
-SELECT *,
-    CASE
-        WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
-        WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
-        ELSE 'Evening'
-    END as shift
-FROM retail_sales
-)
-SELECT 
-    shift,
-    COUNT(*) as total_orders    
-FROM hourly_sale
-GROUP BY shift
+SELECT Salary
+FROM (SELECT TOP 2 Salary
+    FROM [dbo].[Employee position2]
+    ORDER BY Salary DESC) AS MaxSalaries;
 ```
 
 ## Findings
 
-- **Customer Demographics**: The dataset includes customers from various age groups, with sales distributed across different categories such as Clothing and Beauty.
-- **High-Value Transactions**: Several transactions had a total sale amount greater than 1000, indicating premium purchases.
-- **Sales Trends**: Monthly analysis shows variations in sales, helping identify peak seasons.
-- **Customer Insights**: The analysis identifies the top-spending customers and the most popular product categories.
+- **Employee Demographics**: The dataset captures employees with details such as names, DOB, gender, department, and address. Gender distribution can be analyzed and DOB ranges (Q11) show employees born between 1970–1995, allowing age-group segmentation.
+- **Departmental Insights**: The analysis shows department-wise counts, highlighting HR and other departments’ workforce sizes. Sorting by department count reveals which departments are most/least staffed.
+- **Position & Salary Analysis**: Managerial roles are identifiable, enabling leadership headcount reporting. Salary ranges (Q7, Q20) highlight employees earning between 50,000–100,000 as the min/max salary bands. Top earners can be extracted (Q9), useful for compensation benchmarking.
+- **Employee Trends**: Employees with DateOfJoining not null (Q19) show active workforce.
 
-## Reports
 
-- **Sales Summary**: A detailed report summarizing total sales, customer demographics, and category performance.
-- **Trend Analysis**: Insights into sales trends across different months and shifts.
-- **Customer Insights**: Reports on top customers and unique customer counts per category.
 
 ## Conclusion
 
-This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
+This project demonstrates how SQL can be applied to database setup, data cleaning, and exploratory analysis using employee information. By working with the EmployeeInfo and EmployeePosition2 tables, we were able to:
+- Standardize and clean data (removing nulls, formatting DOB, parsing addresses).
+- Generate demographic insights such as gender distribution, age ranges, and departmental counts.
+- Explore organizational structure by identifying managerial roles and department staffing levels.
+- Analyze salary trends, including ranges, top earners, and employees within specific pay bands.
+- Retrieve targeted employee details using conditions on names, addresses, and joining dates.
+
+Overall, the exercise highlights how SQL queries can uncover meaningful workforce insights, support HR reporting, and provide a foundation for business-driven decision making.
+
 
 
 ## Author - Tega Abada
