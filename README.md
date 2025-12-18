@@ -222,10 +222,10 @@ FROM (SELECT TOP 2 Salary
 
 ## Findings
 
-- **Employee Demographics**: The dataset captures employees with details such as names, DOB, gender, department, and address. Gender distribution can be analyzed and DOB ranges (Q11) show employees born between 1970–1995, allowing age-group segmentation.
+- **Employee Demographics**: The dataset captures employees with details such as names, DOB, gender, department, and address. Gender distribution can be analyzed and DOB ranges show employees born between 1970–1995, allowing age-group segmentation.
 - **Departmental Insights**: The analysis shows department-wise counts, highlighting HR and other departments’ workforce sizes. Sorting by department count reveals which departments are most/least staffed.
-- **Position & Salary Analysis**: Managerial roles are identifiable, enabling leadership headcount reporting. Salary ranges (Q7, Q20) highlight employees earning between 50,000–100,000 as the min/max salary bands. Top earners can be extracted (Q9), useful for compensation benchmarking.
-- **Employee Trends**: Employees with DateOfJoining not null (Q19) show active workforce.
+- **Position & Salary Analysis**: Managerial roles are identifiable, enabling leadership headcount reporting. Salary ranges highlight employees earning between 50,000–100,000 as the min/max salary bands. Top earners can be extracted, useful for compensation benchmarking.
+- **Employee Trends**: Employees with DateOfJoining not null show active workforce.
 
 
 
