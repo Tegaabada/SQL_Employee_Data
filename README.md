@@ -4,7 +4,7 @@
 
 **Project Title**: Employee Details Analysis 
 **Database**:`SQL DB`
-**Tech Stack**: ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=flat&logo=microsoftsqlserver&logoColor=white)` ![ETL Pipeline](https://img.shields.io/badge/ETL%20Pipeline-4B8BBE?style=flat&logoColor=white)
+**Tech Stack**: ![SQL Server](https://img.shields.io/badge/SQL%20Server-CC2927?style=flat&logo=microsoftsqlserver&logoColor=white) ![ETL Pipeline](https://img.shields.io/badge/ETL%20Pipeline-4B8BBE?style=flat&logoColor=white)
 
 This project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze employee data. The project involves setting up employee tables on an SQL database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries.
 
