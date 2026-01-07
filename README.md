@@ -27,7 +27,7 @@ This project is designed to demonstrate SQL skills and techniques typically used
 ### 2. Data Cleaning
 
 - **Null Value Check**: View tables and check for any null values in the dataset and delete records with missing data.
-- **Datatype Check**: View tables and check datatype and alter columns with wrong datatypes.
+- **Datatype Check**: View tables, check datatype and alter columns with wrong datatypes.
 
 ```sql
 USE [SQL DB]
